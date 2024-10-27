@@ -1,82 +1,113 @@
-import { Component, useState } from 'react';
-import React from "react";
-import { Box, TextField, Button, styled, Typography} from "@mui/material";
+import React, { useState } from "react";
 
 function Login() {
-  let imageURL =
-    "https://www.sesta.it/wp-content/uploads/2021/03/logo-blog-sesta-trasparente.png";
 
-  const [account , toggleAccount] = useState('login');
-  
-  const Component = styled(Box)`
-    width: 400px;
-    margin: auto;
-    box-shadow: 5px 2px 5px 2px rgb(0 0 0/ 0.6);
-  `;
-  const Image = styled("img")({
-    width: 100,
-    display: "flex",
-    margin: "auto",
-    padding: "50px 0 0",
-  });
-  const Wrapper = styled(Box)`
-   padding: 25px 35px;
-   display: flex;
-   flex-direction : column;
-   & > div , & > button, & > p{
-   margin-top : 20px}
-  `
-  
-  const Loginbutton = styled(Button)`
-    text-transform : none;
-    background: #fb641b;
-    height: 48px;
-    border-radius : 2px;
-  `
-  const Signupbutton =styled(Button)`
-    text-transform : none;
-    background: #fff;
-    color: #2B74F0;
-    height: 48px;
-    border-radius : 2px;
-    box-shadow: 0 2px 4px 0 rgb(0 0 0/ 20%);
-  `
-  const Text = styled(Typography)`
-  color : #878787;
-  font-size: 14px;
-  `
+   //------------------------------------------Objects----------------------------------------------------------//
 
-   const toggleSignup = () => {
-    account === 'signup' ? toggleAccount('login'): toggleAccount('signup')
-   }
-  
-  
+
+
+ const signupInitialValues = {
+  name : "",
+  username : "",
+  password : ""
+ }
+
+
+
+
+  //--------------------------------------useState-----------------------------------------------------//
+  const [account, toggleAccount] = useState("login");
+  const [signup,setSignup] = useState(signupInitialValues);
+
+
+
+
+
+//---------------------------------------Image------------------------------------------------------//
+  let imageURL = "https://www.sesta.it/wp-content/uploads/2021/03/logo-blog-sesta-trasparente.png";
+
+
+
+
+
+
+
+console.log(signup)
+
+
+//-------------------------------------Functions------------------------------------------------------//
+  const toggleSignup = () => {
+    account === "signup" ? toggleAccount("login") : toggleAccount("signup");
+  };
+
+  const onInputChange = (e)=>{
+      setSignup({...signup,[e.target.name]:e.target.value})
+  }
+ 
   return (
-    <Component>
-      <Box>
-        <Image src={imageURL} alt="login" />
-        {
-            account === 'login' ? 
-        
-            <Wrapper>
-                   <TextField variant="standard" label="Enter username"></TextField>
-                   <TextField variant="standard" label="Enter password"></TextField>
-                   <Loginbutton variant="contained">Login</Loginbutton>
-                    <Text style={ {textAlign : 'center'} } >OR</Text>
-                   <Signupbutton onClick={()=> toggleSignup ()} >Create an account?</Signupbutton>
-           </Wrapper>
-            :
-        <Wrapper>
-          <TextField variant="standard" label="Enter Fullname"></TextField>
-          <TextField variant="standard" label="Enter Username"></TextField>
-          <TextField variant="standard" label="Enter Password"></TextField>
-          <Signupbutton variant="contained">Signup</Signupbutton>
-           <Text style={ {textAlign : 'center'} } >OR</Text>
-          <Loginbutton onClick={()=> toggleSignup()} variant="contained" >Already have an account</Loginbutton>
-        </Wrapper>
-}
-      </Box>
-    </Component>
+    <div className="w-96 mx-auto p-6 bg-white shadow-xl rounded-lg transition-transform transform hover:scale-105 duration-300 hover:shadow-2xl">
+      <div>
+        <img src={imageURL} alt="login" className="w-24 mx-auto mt-12" />
+        {account === "login" ? (
+          <div className="px-8 py-6 flex flex-col">
+            <input
+              type="text"
+              placeholder="Enter username"
+              className="border-b border-gray-300 focus:border-blue-500 transition-all duration-300 outline-none py-2 mt-5 shadow-sm focus:shadow-md"
+            />
+            <input
+              type="password"
+              placeholder="Enter password"
+              className="border-b border-gray-300 focus:border-blue-500 transition-all duration-300 outline-none py-2 mt-5 shadow-sm focus:shadow-md"
+            />
+            <button className="bg-orange-500 text-white h-12 mt-5 rounded-lg transition-all duration-300 hover:bg-orange-600 transform hover:scale-105 shadow-md hover:shadow-lg">
+              Login
+            </button>
+            <p className="text-center text-gray-500 text-sm my-5">OR</p>
+            <button
+              onClick={toggleSignup}
+              className="bg-white text-blue-500 h-12 rounded-lg shadow-md transition-all duration-300 hover:bg-blue-100 transform hover:scale-105"
+            >
+              Create an account?
+            </button>
+          </div>
+        ) : (
+          <div className="px-8 py-6 flex flex-col">
+            <input 
+              onChange={(e) => onInputChange(e)}
+              name="name"
+              type="text"
+              placeholder="Enter Fullname"
+              className="border-b border-gray-300 focus:border-blue-500 transition-all duration-300 outline-none py-2 mt-5 shadow-sm focus:shadow-md"
+            />
+            <input
+             onChange={(e) => onInputChange(e)}
+              name="username"
+              type="text"
+              placeholder="Enter Username"
+              className="border-b border-gray-300 focus:border-blue-500 transition-all duration-300 outline-none py-2 mt-5 shadow-sm focus:shadow-md"
+            />
+            <input
+             onChange={(e) => onInputChange(e)}
+              name="password"
+              type="password"
+              placeholder="Enter Password"
+              className="border-b border-gray-300 focus:border-blue-500 transition-all duration-300 outline-none py-2 mt-5 shadow-sm focus:shadow-md"
+            />
+            <button className="bg-white text-blue-500 h-12 mt-5 rounded-lg shadow-md transition-all duration-300 hover:bg-blue-100 transform hover:scale-105">
+              Signup
+            </button>
+            <p className="text-center text-gray-500 text-sm my-5">OR</p>
+            <button
+              onClick={toggleSignup}
+              className="bg-orange-500 text-white h-12 rounded-lg transition-all duration-300 hover:bg-orange-600 transform hover:scale-105 shadow-md hover:shadow-lg"
+            >
+              Already have an account
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 
